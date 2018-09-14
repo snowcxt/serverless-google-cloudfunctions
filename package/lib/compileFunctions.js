@@ -41,6 +41,12 @@ module.exports = {
         _.get(this, 'serverless.service.provider.labels') || {},
         _.get(funcObject, 'labels') || {},
       );
+      funcTemplate.properties.environmentVariables = _.get(funcObject, 'environment')
+        || _.get(this, 'serverless.service.provider.environment')
+        || null;
+      if (funcTemplate.properties.environmentVariables === null) {
+        delete funcTemplate.properties.environmentVariables;
+      }
 
       const eventType = Object.keys(funcObject.events[0])[0];
 
